@@ -4,6 +4,7 @@ import tushare as ts
 import os
 import threading
 import time
+from FxFetcher import *
 
 def make_stock_list():
 	result = []
@@ -14,8 +15,10 @@ def make_stock_list():
 
 def get(stocklist):
     i = os.system("clear")                                          # 清屏操作
+    print ("========================")
+    fetch_fx_rate()
+    print ("========================")
     df = ts.get_realtime_quotes(stocklist)
-
     for i in range(len(stocklist)):
         #print(df['code'][i] + "  " + df['name'][i] + "  " + str(df['price'][i])  + str(round((float(df['price'][i]) - float(df['pre_close'][i])) / float(df['pre_close'][i]) * 100, 2)) + "%" + "  ")
         print(df['code'][i] + "  "  + str(df['price'][i]) + "  " + str(round((float(df['price'][i]) - float(df['pre_close'][i])) / float(df['pre_close'][i]) * 100, 2)) + "%" + "  ")
