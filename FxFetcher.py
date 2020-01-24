@@ -15,4 +15,4 @@ def fetch_fx_rate():
 	print(USDCNY)
 
 if __name__ == '__main__':
-	fetch_fx_rat:()
+	fetch_fx_rate()
