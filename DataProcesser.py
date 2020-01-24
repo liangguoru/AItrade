@@ -32,7 +32,7 @@ class DataProcesser:
 		result_list = []
 		while (rs.error_code == '0') & rs.next():
 			# 获取一条记录，将记录合并在一起
-			result_list.append(rs.get_row_data())
+			result_list = rs.get_row_data()
 		# result = pd.DataFrame(result_list, columns=rs.fields)
 		return result_list
 
@@ -60,6 +60,36 @@ class DataProcesser:
 		return result_list
 
 
+	#---------------------------------
+	#功能：统计每日滚动数据中，最优指标的几只
+	#使用方法：输入每个指标抽取个数,以及分析日期，返回字典类型，每个成员是一个列表
+	#---------------------------------
+	def find_good_target_daily(self,number = 5,query_day = "2020-01-23"):
+		# result_list = {'peTTM':[],'psTTM':[],'pcfNcfTTM':[],'pbMRQ':[]}
+		result_list = []
+		with open('stock_list.txt','r') as fd:
+			i = 0
+			for line in fd.readlines():
+				# print (line)
+				result = self.query_day_standard(stocknum = line.replace('\n',''), query_day = query_day)
+				print (result)
+				result_list.append(result)
+				i = i + 1
+				if i == 100:
+					break
+		peTTM_list = sorted(result_list, key = lambda result: result[3], reverse = True)[:number - 1]
+		pbMRQ_list = sorted(result_list, key = lambda result: result[4], reverse = True)[:number - 1]
+		psTTM_list = sorted(result_list, key = lambda result: result[5], reverse = True)[:number - 1]
+		pcfNcfTTM_list = sorted(result_list, key = lambda result: result[6], reverse = True)[:number - 1]
+		print (peTTM_list)
+		print (pbMRQ_list)
+		print (psTTM_list)
+		print (pcfNcfTTM_list)
+		return peTTM_list,pbMRQ_list,psTTM_list,pcfNcfTTM_list
+
+		
+
+
 if __name__ == '__main__':
 	d = DataProcesser()
-	result_list = d.query_day_standard()
+	result_list = d.find_good_target_daily()
