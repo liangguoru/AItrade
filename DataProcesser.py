@@ -62,4 +62,4 @@ class DataProcesser:
 
 if __name__ == '__main__':
 	d = DataProcesser()
-	d.query_day_standard()
+	result_list = d.query_day_standard()

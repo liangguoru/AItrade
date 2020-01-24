@@ -43,6 +43,16 @@ class DataHandler:
 			result.append(stock[0].replace('sz.','').replace('sh.','') )
 		return result
 
+	#---------------------------------
+	#功能：把列表保存为txt
+	#使用方法：参数为列表，转换字符串后存盘，没有返回值
+	#---------------------------------
+	def writelist(self, result_list):
+		with open('stock_list.txt','w') as fd:
+			for _ in result_list:
+				fd.write(str(_) + '\n')
+
 if __name__ == '__main__':
 	d = DataHandler()
-	d.query_all_stock_number()
+	result = d.query_all_stock_number()
+	d.writelist(result)
