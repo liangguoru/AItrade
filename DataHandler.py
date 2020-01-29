@@ -124,6 +124,11 @@ class DataHandler:
 
 if __name__ == '__main__':
 	d = DataHandler()
-	d.save_stock_classify_info()
-	# for stock in result:
-	# 	d.save_single_stock(stock_num = stock)
+	with open('stock_list_simple.txt','r') as fd:
+		i = 0
+		for line in fd.readlines():
+			# print(line.replace('\n',''))
+			# if i == 10:
+			# 	break
+			d.save_single_stock(stock_num = line.replace('\n',''))
+			i = i + 1

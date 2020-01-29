@@ -3,6 +3,7 @@
 import tushare as ts
 import baostock as bs
 import pandas as pd
+import const as const
 
 
 class DataProcesser:
@@ -50,8 +51,9 @@ class DataProcesser:
 			"date,code,close,peTTM,pbMRQ,psTTM,pcfNcfTTM",
 			start_date=s_day, end_date=e_day, 
 			frequency="d", adjustflag="3")
-		print('query_history_k_data_plus respond error_code:'+rs.error_code)
-		print('query_history_k_data_plus respond  error_msg:'+rs.error_msg)
+		# print('query_history_k_data_plus respond error_code:'+rs.error_code)
+		# print('query_history_k_data_plus respond  error_msg:'+rs.error_msg)
+		print (str(stocknum) + '   done....\n')
 		result_list = []
 		while (rs.error_code == '0') & rs.next():
 			# 获取一条记录，将记录合并在一起
@@ -75,16 +77,16 @@ class DataProcesser:
 				print (result)
 				result_list.append(result)
 				i = i + 1
-				if i == 100:
-					break
+				# if i == 100:
+				# 	break
 		peTTM_list = sorted(result_list, key = lambda result: result[3], reverse = True)[:number - 1]
 		pbMRQ_list = sorted(result_list, key = lambda result: result[4], reverse = True)[:number - 1]
 		psTTM_list = sorted(result_list, key = lambda result: result[5], reverse = True)[:number - 1]
 		pcfNcfTTM_list = sorted(result_list, key = lambda result: result[6], reverse = True)[:number - 1]
-		print (peTTM_list)
-		print (pbMRQ_list)
-		print (psTTM_list)
-		print (pcfNcfTTM_list)
+		print ("滚动市盈率：",peTTM_list)
+		print ("市净率：",pbMRQ_list)
+		print ("滚动市销率：",psTTM_list)
+		print ("滚动市现率：",pcfNcfTTM_list)
 		return peTTM_list,pbMRQ_list,psTTM_list,pcfNcfTTM_list
 
 		
@@ -92,4 +94,6 @@ class DataProcesser:
 
 if __name__ == '__main__':
 	d = DataProcesser()
-	result_list = d.find_good_target_daily()
+	print ("kasannkekka = ",const.A+const.B+const.C)
+
+	# result_list = d.find_good_target_daily()
