@@ -15,7 +15,7 @@ def make_stock_list():
 
 def get(stocklist):
     i = os.system("clear")                                          # 清屏操作
-    print ("========================")
+    print ("===1=====================")
     fetch_fx_rate()
     print ("========================")
     df = ts.get_realtime_quotes(stocklist)
